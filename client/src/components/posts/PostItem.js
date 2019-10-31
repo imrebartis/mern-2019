@@ -14,10 +14,17 @@ const PostItem = ({
 }) => (
   <div className="post bg-white p-1 my-1">
     <div>
-      <Link to={`/profile/${user}`}>
-        <img className="round-img" src={avatar} alt="" />
-        <h4>{name}</h4>
-      </Link>
+      {!auth.loading && user === auth.user._id ? (
+        <Link to={`/profile/${user}`}>
+          <img className="round-img" src={avatar} alt="" />
+          <h4>{name}</h4>
+        </Link>
+      ) : (
+        <Fragment>
+          <img className="round-img" src={avatar} alt="" />
+          <h4>{name}</h4>
+        </Fragment>
+      )}
     </div>
     <div>
       <p className="my-1">{text}</p>
@@ -46,7 +53,11 @@ const PostItem = ({
         )}
       </Link>
       {!auth.loading && user === auth.user._id && (
-        <button onClick={e => deletePost(_id)} type="button" className="btn btn-danger">
+        <button
+          onClick={e => deletePost(_id)}
+          type="button"
+          className="btn btn-danger"
+        >
           <i className="fas fa-times" />
         </button>
       )}
